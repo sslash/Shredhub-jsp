@@ -172,8 +172,9 @@
 
 		<!-- FORM INPUT -->
 		<div class="modal-body">
-			<form name="f" class="form-inline" 
-				action="<c:url value='j_spring_security_check' />" method="POST">
+			<form name="f" class="form-inline" action="loginShredder" method="POST"> 
+				<!-- action="<c:url value='j_spring_security_check' />" method="POST"> -->
+				
 
 				<div class="control-group">
 					

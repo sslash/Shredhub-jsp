@@ -9,7 +9,7 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
-	<beans:bean class="com.mikey.shredhub.controller.jsp.helpers.BattleStatusService" name="battleStatusService"/>
+	<beans:bean class="com.mikey.shredhub.controller.jsp.helpers.BattleStatusService" name="battleStatusService"/> 
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />

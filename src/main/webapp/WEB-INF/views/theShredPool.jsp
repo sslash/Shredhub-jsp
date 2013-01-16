@@ -97,7 +97,7 @@
 					<!-- List of shreds -->
 					<div class="row">
 						<div class="span2">
-							<a class="nextShred" href="#">&lsaquo;</a>
+							<a href="?action=nextShredSet" class="nextShred" >&lsaquo;</a>
 						</div>
 
 						<c:forEach items="${fanShreds}" var="shred" varStatus="i"
@@ -116,7 +116,8 @@
 						</c:forEach>
 
 						<div class="span2">
-							<a class="nextShred" href="#">&rsaquo;</a>
+							<a href="?action=nextShredSet" class="nextShred" >&rsaquo;</a>
+					
 						</div>
 						<!--  row-fluid -->
 					</div>

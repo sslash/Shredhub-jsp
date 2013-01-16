@@ -31,8 +31,6 @@ CREATE TABLE Fan (
 	CONSTRAINT pk_Fan PRIMARY KEY (FanerId, FaneeId)
 );
 
-SELECT * FROM Shred s, ShredForBattle sfb, Shredder sr WHERE sfb.BattleId=17 AND s.Id = sfb.ShredId AND s.owner = sr.id  ORDER By round;
-
 CREATE TABLE Tag (
 	Id			serial PRIMARY KEY,
 	Label		varchar(20) NOT NULL
@@ -99,7 +97,6 @@ CREATE TABLE BattleCategori(
 	Id				serial PRIMARY KEY,
 	CategoriText	text NOT NULL UNIQUE
 );
-SELECT * FROM BattleCategori;
 
 CREATE TABLE Battle (
 	Id				serial PRIMARY KEY,
@@ -108,12 +105,11 @@ CREATE TABLE Battle (
 	TimeCreated	timestamp DEFAULT CURRENT_TIMESTAMP,
 	BattleCategori	serial REFERENCES BattleCategori,
 	Status			varchar(30) DEFAULT 'awaiting' CHECK (Status ='accepted' or Status ='declined' or Status='awaiting'),
-	Round			int DEFAULT 1,
+	Round			int DEFAULT 1
 	-- status
 	-- Round
 	-- Shreds	
 );
-SELECT * FROM Battle;
 
 CREATE TABLE ShredForBattle(
 	ShredId		serial REFERENCES Shred(Id),
