@@ -22,7 +22,7 @@
 	<c:forEach items="${shredders}" var="shredder" varStatus="i">
 		<div class="row-fluid">
 			<div class="span2">
-				<img src="<c:url value="/resources/images/"/>${shredder.profileImagePath}"
+				<img src="<c:url value="/resources/images/profiles/"/>${shredder.profileImagePath}"
 					alt="Profile img" width="304">
 				<!--/span2-->
 			</div>
@@ -43,9 +43,6 @@
 </div>
 <hr>
 
-<footer>
-	<p>&copy; Shredhub 2012</p>
-</footer>
 
 	<!--/.fluid-container-->
 
@@ -60,5 +57,7 @@
 		src="<c:url value="/resources/styling/bootstrap/"/>js/bootstrap-typeahead.js"></script>
 	<script
 		src="<c:url value="/resources/styling/bootstrap/"/>js/prettify.js"></script>
+
+<jsp:include page="header.jsp" />
 </body>
 </html>

@@ -16,7 +16,7 @@
 
 				<div class="span6">
 					<img alt="Profile image"
-						src="<c:url value="/resources/images/"/>${currentShredder.profileImagePath}"
+						src="<c:url value="/resources/images/profiles/"/>${currentShredder.profileImagePath}"
 						width="300px" class="img-rounded" />
 				</div>
 				<div class="span6">
@@ -273,7 +273,7 @@
 						<div class="span2">
 							<a href="<c:url value='/shredder/'/>${fanee.id}"> <img
 								class="imageClipped"
-								src="<c:url value="/resources/images/"/>${fanee.profileImagePath}" />
+								src="<c:url value="/resources/images/profiles/"/>${fanee.profileImagePath}" />
 							</a>
 							<p>${fanee.username}</p>
 						</div>
@@ -299,7 +299,7 @@
 						<div class="span2">
 							<a href="" onclick="openVideoModal(${shred.id}); return false;">
 								<img class="imageClipped"
-								src="<c:url value="/resources/vidz/"/>23shred1.jpg" />
+								src="<c:url value="/resources/vidz/"/>${shred.thumbnailpath}" />
 							</a>
 
 							<p>${shred.description}</p>
@@ -377,11 +377,6 @@
 		</div>
 	</div>
 
-	<footer>
-		<p>&copy; Mikey 2012</p>
-	</footer>
-
-
 
 	<!-- Le javascript
     ================================================== -->
@@ -394,5 +389,7 @@
 		src="<c:url value="/resources/styling/bootstrap/"/>js/bootstrap-typeahead.js"></script>
 	<script
 		src="<c:url value="/resources/styling/bootstrap/"/>js/prettify.js"></script>
+		
+	<jsp:include page="footer.jsp" />
 </body>
 </html>

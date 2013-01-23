@@ -87,7 +87,7 @@ public class ShredController {
 			return null;
 		}
 		logger.info("New rate was added");
-		return shredService.getShredById(shredId + "");
+		return shredService.getShredById("" + shredId);
 	}	
 	
 	@RequestMapping(value="/recommendations", method = RequestMethod.GET, params="action=highestRating")
@@ -110,13 +110,14 @@ public class ShredController {
 	public String getRecommendedShredsFromShreddersShredderMightKnow(@RequestParam("shredderId") int shredderId, Model model, HttpSession session) {
 		logger.info("Inside get shreds based on shredders shredder might know");
 		addShredNewsToModel((Shredder) session.getAttribute("shredder"), model);
-		model.addAttribute("shreds", recommendationService.getRecsBasedOnShreddersShredderMightKnow(shredderId));	
+		model.addAttribute("shreds", recommendationService.getRecsBasedOnShreddersShredderMightKnow(shredderId, 0));	
 		System.out.println("GOT: ");
-		for ( Shred s : recommendationService.getRecsBasedOnShreddersShredderMightKnow(shredderId)) 
+		for ( Shred s : recommendationService.getRecsBasedOnShreddersShredderMightKnow(shredderId, 0)) 
 			System.out.println(s.toString());
 		
 		return "/theShredPool";
 	}
+	
 	@RequestMapping(value="/recommendations", method = RequestMethod.GET, params="action=all")
 	public String getAllShreds( Model model, HttpSession session) {
 		addShredNewsToModel((Shredder) session.getAttribute("shredder"), model);
@@ -130,27 +131,6 @@ public class ShredController {
 		model.addAttribute("news", shredNewsService.getLatestShredNewsItems(shredder, 20));		
 	}
 
-	// TODO: limit amount of returned shreds
-	@RequestMapping(value="/recommendations/byTags", method = RequestMethod.GET)
-	public String getRecommendedShredsByTagList(@RequestParam("tagList") String tagList, Model model, HttpSession session) {
-		logger.info("Inside get shreds based on tag list");
-		//addShredNewsToModel((Shredder) session.getAttribute("shredder"), model);
-		List <String> tags = getTagsFromString(tagList);
-		if ( tags != null && tags.isEmpty()){
-			session.setAttribute("tagShreds", shredService.getAllShreds()); 
-		}else if ( tags != null ) {
-			session.setAttribute("tagShreds", recommendationService.getRecsBasedOnTags(tags));	
-		} else {
-			System.out.println("Error! Wrong format for tags");
-		}
-			
-		return "redirect:/shredpool";
-	}
-
-	private List<String> getTagsFromString(String tagList) {
-		Pattern splitPat = Pattern.compile(",\\s*");
-		String[] tagsArr = splitPat.split(tagList);
-		return Arrays.asList(tagsArr);
-	}
+	
 	
 }

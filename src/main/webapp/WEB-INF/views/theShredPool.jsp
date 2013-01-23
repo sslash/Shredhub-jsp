@@ -97,7 +97,7 @@
 					<!-- List of shreds -->
 					<div class="row">
 						<div class="span2">
-							<a href="?action=nextShredSet" class="nextShred" >&lsaquo;</a>
+							<a href="?action=nextShredSet" class="nextShred">&lsaquo;</a>
 						</div>
 
 						<c:forEach items="${fanShreds}" var="shred" varStatus="i"
@@ -108,7 +108,7 @@
 								<a href="" data-toggle="modal" class="newShredsFromFaneesAncor"
 									onclick="openVideoModal(${shred.id}); return false;"> <img
 									class="imageClipped"
-									src="<c:url value="/resources/vidz/"/>23shred1.jpg" />
+									src="<c:url value="/resources/vidz/"/>${shred.thumbnailpath}" />
 								</a>
 								<p class="lead">${shred.description}</p>
 								<p class="small">${shred.owner.username}</p>
@@ -116,8 +116,8 @@
 						</c:forEach>
 
 						<div class="span2">
-							<a href="?action=nextShredSet" class="nextShred" >&rsaquo;</a>
-					
+							<a href="?action=nextShredSet" class="nextShred">&rsaquo;</a>
+
 						</div>
 						<!--  row-fluid -->
 					</div>
@@ -205,7 +205,7 @@
 											<a href=""
 												onclick="openVideoModal(${newsItem.shred.id}); return false;">
 												<img class="imageClipped newsItemImage"
-												src="<c:url value="/resources/vidz/"/>23shred1.jpg"
+												src="<c:url value="/resources/vidz/"/>${newsItem.shred.thumbnailpath}"
 												width="20" />
 											</a>
 										</div>
@@ -250,7 +250,7 @@
 
 
 					<div class="span3">
-						<h5>New battle created with your fanees in</h5>
+						<h5>New battles created with your fanees in</h5>
 						</br>
 						<div id="newBattlesFromFanees">
 							<div class="row-fluid">
@@ -259,7 +259,7 @@
 									<div class="row-fluid">
 										<div class="span5">
 											<img class="imageClipped newsItemImage"
-												src="<c:url value="/resources/images/"/>${newsItem.battle.battler.shredder.profileImagePath}" />
+												src="<c:url value="/resources/images/profiles/"/>${newsItem.battle.battler.shredder.profileImagePath}" />
 										</div>
 										<div class="span2">
 											<h3>
@@ -269,7 +269,7 @@
 										</div>
 										<div class="span5">
 											<img class="imageClipped newsItemImage"
-												src="<c:url value="/resources/images/"/>${newsItem.battle.battlee.shredder.profileImagePath}" />
+												src="<c:url value="/resources/images/profiles/"/>${newsItem.battle.battlee.shredder.profileImagePath}" />
 										</div>
 									</div>
 									<div class="row-fluid">
@@ -298,7 +298,7 @@
 									<div class="row-fluid">
 										<div class="span4">
 											<a href=""> <img class="imageClipped newsItemImage"
-												src="<c:url value="/resources/images/"/>${newsItem.shredder.profileImagePath}" />
+												src="<c:url value="/resources/images/profiles/"/>${newsItem.shredder.profileImagePath}" />
 											</a>
 										</div>
 										<div class="span8">
@@ -349,7 +349,7 @@
 					<div class="row">
 
 						<div class="span1">
-							<a class="nextShred" href="#">&lsaquo;</a>
+							<a href="?action=nextHighRatingShredSet" class="nextShred">&lsaquo;</a>
 						</div>
 
 						<c:forEach items="${topShreds}" var="shred" varStatus="i"
@@ -381,7 +381,7 @@
 							</div>
 						</c:forEach>
 						<div class="span1">
-							<a class="nextShred" href="#">&rsaquo;</a>
+							<a href="?action=nextHighRatingShredSet" class="nextShred">&rsaquo;</a>
 						</div>
 						<!--  row-fluid -->
 					</div>
@@ -397,7 +397,7 @@
 				<div class="row-fluid">
 
 					<div class="span1">
-						<a class="nextShred" href="#">&lsaquo;</a>
+						<a href="?action=nextMightKnowShredsSet" class="nextShred">&lsaquo;</a>
 					</div>
 
 					<c:forEach items="${mightKnowShreds}" var="shred" varStatus="i"
@@ -415,7 +415,8 @@
 						</div>
 					</c:forEach>
 					<div class="span2">
-						<a class="nextShred" href="#">&rsaquo;</a>
+						<a href="?action=nextMightKnowShredsSet&${tagShredsCount}"
+							class="nextShred">&rsaquo;</a>
 					</div>
 					<!--  /row-fluid -->
 				</div>
@@ -428,12 +429,11 @@
 				<h2>Shreds based on tags</h2>
 
 				<div class="row-fluid">
+
+					<div class="span4"></div>
 					<div class="span4">
-						<a class="nextShred" href="#">&lsaquo;</a>
-					</div>
-					<div class="span4">
-						<form action="<c:url value='/shred/recommendations/byTags'/>"
-							method="GET" class="form-search">
+						<form action="<c:url value="/theShredPool/"/>?action=shredsByTags" method="GET"
+							class="form-search">
 							<input type="text" name="tagList"
 								placeholder="Tag1, Tag2, Tag3.."
 								class="input-medium search-query" />
@@ -441,8 +441,8 @@
 						</form>
 
 					</div>
+
 					<div class="span4">
-						<a class="nextShred" href="#">&rsaquo;</a>
 					</div>
 				</div>
 
@@ -455,10 +455,9 @@
 
 							<div class="span2">
 
-								<a href="#"
-									onclick="openVideoModal(${newsItem.shred.id}); return false;"
+								<a href="#" onclick="openVideoModal(${shred.id}); return false;"
 									class="newShredsFromFaneesAncor"> <img class="imageClipped"
-									src="<c:url value="/resources/vidz/"/>23shred1.jpg" />
+									src="<c:url value="/resources/vidz/"/>${shred.thumbnailpath}" />
 								</a>
 								<p class="lead">${shred.description}</p>
 								<p>By: ${shred.owner.username}</p>
@@ -468,24 +467,21 @@
 										<c:choose>
 											<c:when test='${t.count > 1}'>,</c:when>
 										</c:choose>	
-							${tag.label}
-							</c:forEach>
+										${tag.label}
+									</c:forEach>
 								</p>
 
 							</div>
 
 							<c:choose>
 								<c:when test="${i.count % 6 == 0 }">
-									<c:choose>
-										<c:when test="${i.count != 1}">
+									<c:if test="${i.count != 1}">
 					</div>
-					</c:when>
-					</c:choose>
+					</c:if>
 					<div class="row">
 						</c:when>
 						</c:choose>
 						</c:forEach>
-
 						<!--  row-fluid -->
 					</div>
 				</div>
@@ -498,16 +494,7 @@
     ================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 
-
-		<script
-			src="<c:url value="/resources/styling/bootstrap/"/>js/bootstrap-dropdown.js"></script>
-		<script
-			src="<c:url value="/resources/styling/bootstrap/"/>js/bootstrap-typeahead.js"></script>
-		<script
-			src="<c:url value="/resources/styling/bootstrap/"/>js/prettify.js"></script>
-		<script
-			src="<c:url value="/resources/styling/bootstrap/"/>js/bootstrap-tooltip.js"></script>
-		<script
-			src="<c:url value="/resources/styling/bootstrap/"/>js/bootstrap-popover.js"></script>
+		<jsp:include page="footer.jsp" />
+		
 </body>
 </html>

@@ -208,7 +208,7 @@
 							<a href="#shredPool"
 								onclick="openVideoModal(${shred.id}); return false;"
 								class="newShredsFromFaneesAncor"> <img class="imageClipped"
-								src="<c:url value="/resources/vidz/"/>23shred1.jpg" />
+								src="<c:url value="/resources/vidz/"/>${shred.thumbnailpath}" />
 							</a>
 							<p class="lead">${shred.description}</p>
 							<p class="small">${shred.owner.username}</p>
@@ -231,6 +231,6 @@
 		</div>
 	</div>
 	</div>
-
+<jsp:include page="footer.jsp" />
 </body>
 </html>

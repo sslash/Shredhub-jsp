@@ -15,6 +15,8 @@ public class ShredListCache {
 	
 	private List <Shred> shreds;
 	
+	private List <Shred> currShreds;
+	
 	private int currIndex = 0;
 	
 	private int setSize = 4;
@@ -47,11 +49,15 @@ public class ShredListCache {
 	
 	public List <Shred> getNextSet() {
 		logger.info("Getting next cache set! Get from " + currIndex + ", ending at: " + (currIndex + setSize)+ ", page: " + page);
-		List <Shred> toReturn = new ArrayList<Shred>();
+		currShreds = new ArrayList<Shred>();
 		int end = currIndex + setSize;
 		for ( ; currIndex < end && currIndex < shreds.size(); currIndex ++) {
-			toReturn.add(shreds.get(currIndex));
+			currShreds.add(shreds.get(currIndex));
 		}
-		return toReturn;
+		return currShreds;
+	}
+	
+	public List <Shred> getCurrShreds() {
+		return currShreds;
 	}
 }

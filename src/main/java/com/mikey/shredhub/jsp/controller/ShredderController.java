@@ -47,23 +47,30 @@ public class ShredderController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String getShredder(@PathVariable int id, HttpSession session,
 			Model model) throws Exception {
-		logger.info("Inside getShredder: " + id);
+		logger.info("getShredder() requested!" + id);
 
-		Shredder shredder = shredderService.getShredderWithId(id);
 		Shredder loggedInUser = (Shredder) session.getAttribute("shredder");
+		Shredder toReturn = null;
+		if ( id == loggedInUser.getId() ) {
+			logger.info("Get logged in shredder!");
+			toReturn = loggedInUser;
+		} else {
+			toReturn = shredderService.getShredderWithId(id);
+		}
+		
 		List<Shred> shreds = shredService.getShredsForShredderWithId(id);
 		
-		if (shredder == null)
+		if (toReturn == null)
 			throw new Exception("User does not exist");
 		boolean isFan = shredderService.getIfShredder1IsFanOfShredder2(
-				loggedInUser.getId(), shredder.getId());
+				loggedInUser.getId(), toReturn.getId());
 
-		logger.info("Returning: " + shredder.getId() + ": "
-				+ shredder.getUsername() + "Fan? " + isFan);
-		battleStatusService.setBattleStatus(loggedInUser, shredder, model);
+		logger.info("Returning: " + toReturn.getId() + ": "
+				+ toReturn.getUsername() + "Fan? " + isFan);
+		battleStatusService.setBattleStatus(loggedInUser, toReturn, model);
 		model.addAttribute("shreds", shreds);
 		model.addAttribute("isFan", isFan);
-		model.addAttribute("currentShredder", shredder);
+		model.addAttribute("currentShredder", toReturn);
 		return "shredder";
 	}
 
@@ -71,7 +78,9 @@ public class ShredderController {
 	public String getShredders(Model model, HttpSession session) {
 		logger.info("Inside getShredders: ");
 		Shredder user = (Shredder) session.getAttribute("shredder");
-		List<Shredder> shredders = shredderService.getFansForShredderWithId(user.getId());
+		//List<Shredder> shredders = shredderService.getFansForShredderWithId(user.getId());
+		List <Shredder> shredders = user.getFanees();
+		//model.addAttribute("shredders", shredders);
 		model.addAttribute("shredders", shredders);
 		logger.info("Returning:");
 		for (Shredder s : shredders) {
@@ -117,10 +126,10 @@ public class ShredderController {
 			shredService.addShredForShredderWithId(text, id, tagsArr, file);
 
 			// store the bytes somewhere
-			return "/theShredPool";
+			return "redirect:/theShredPool";
 		} else {
 			System.out.println("FIle is empty..");
-			return "redirect:/shredpool"; // should fail
+			return "redirect:/theShredPooll"; // should fail
 		}
 	}
 }

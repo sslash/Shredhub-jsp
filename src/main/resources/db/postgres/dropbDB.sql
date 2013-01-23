@@ -1,7 +1,7 @@
 DELETE FROM Fan;
 DELETE FROM UserRole;
 DELETE FROM Tag;
-DELETE  FROM Shred;
+DELETE FROM Shred;
 SELECT * FROM Tag;
 DELETE  FROM GuitarForShredder;
 DELETE  FROM EquiptmentForShredder;
@@ -16,7 +16,6 @@ DELETE  FROM FinishedBattle;
 DELETE  FROM Rating;
 DELETE  FROM TagsForShred;
 DELETE FROM Shred;
-SELECT * FROM Shred;
 
 DROP TABLE Fan;
 DROP TABLE EquiptmentForShredder;
