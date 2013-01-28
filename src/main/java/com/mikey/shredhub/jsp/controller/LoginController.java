@@ -84,7 +84,7 @@ public class LoginController {
 			return "redirect:/login";
 		}
 		
-		logger.info("Login success! Welcome" + username + ", Time: " + (System.currentTimeMillie()-t1) + ", " + ( System.currentTimeMillie()-t1)/1000 );
+		logger.info("Login success! Welcome" + username + ", Time: " + (System.currentTimeMillis()-t1) + ", " + ( System.currentTimeMillis()-t1)/1000 );
 	 
 		this.populateSessionObject(shredder, session);		
 		return theShredPool(model, session); 
@@ -93,10 +93,10 @@ public class LoginController {
 	private void populateSessionObject(Shredder shredder, HttpSession session) {
 	    long t1 = System.currentTimeMillis();
 		List <Shredder> fans = shredderService.getFansForShredderWithId(shredder.getId());
-		logger.info("Get fans, Time: " + (t1 - System.currentTimeMillie()) + ", " + (t1 - System.currentTimeMillie())/1000 );
+		logger.info("Get fans, Time: " + (t1 - System.currentTimeMillis()) + ", " + (t1 - System.currentTimeMillis())/1000 );
 		List <Battle> battleRequests = battleService.getBattleRequestsForShredderWithId(shredder.getId());
 		long t2 =System.currentTimeMillis(); 
-		logger.info("Get battlerequests, Time: " + (t2 - System.currentTimeMillie()) + ", " + (t2 - System.currentTimeMillie())/1000 );
+		logger.info("Get battlerequests, Time: " + (t2 - System.currentTimeMillis()) + ", " + (t2 - System.currentTimeMillis())/1000 );
 		session.setAttribute("shredder", shredder);
 		session.setAttribute("fans", fans);
 		session.setAttribute("battleRequests",battleRequests );
@@ -172,7 +172,7 @@ public class LoginController {
 	private void populateStatelessShredPoolModel(Model model, Shredder shredder, HttpSession session) {
 	    long t2 = System.currentTimeMillis();
 	    Map<String, List<ShredNewsItem>> shredNewsItems = dbFinder.getShredNews(shredder);
-	    logger.info("shred news: Time " + System.currentTimeMillis()-t2 +", " + (System.currentTimeMillis()-t2)/1000); 
+	    logger.info("shred news: Time " + (System.currentTimeMillis()-t2) + ", " + (System.currentTimeMillis()-t2)/1000); 
 	    model.addAttribute(ShredNewsServiceImpl.BATTLE_SHREDS, shredNewsItems.get(ShredNewsServiceImpl.BATTLE_SHREDS));
 		model.addAttribute(ShredNewsServiceImpl.FANEES_NEWS, shredNewsItems.get(ShredNewsServiceImpl.FANEES_NEWS));
 		model.addAttribute(ShredNewsServiceImpl.NEWEST_BATTLES, shredNewsItems.get(ShredNewsServiceImpl.NEWEST_BATTLES));
@@ -210,7 +210,7 @@ public class LoginController {
 		session.setAttribute("fanShredCache", fanShredCache);		
 		long t2 = System.currentTimeMillis();
 		ShredListCache topShredsCache = new ShredListCache(dbFinder.getTopShreds(), 2, 20);
-		logger.info("get top shreds: " + (System.currentTimeMillis()-t2) + ", " + (System.currentTimeMillis()-t2/1000 );
+		logger.info("get top shreds: " + (System.currentTimeMillis()-t2) + ", " + (System.currentTimeMillis()-t2)/1000 );
 
 		session.setAttribute("topShredCache", topShredsCache);		
 		long t3 = System.currentTimeMillis();
