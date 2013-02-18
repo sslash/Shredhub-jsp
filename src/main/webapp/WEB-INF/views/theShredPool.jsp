@@ -1,3 +1,4 @@
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
@@ -234,9 +235,10 @@
 									begin="0" end="4">
 
 									<p>
-										${newsItem.battleShred.owner.username} added a <a
-											href="<c:url value='/battle/'/>${newsItem.battleId}">shred
-										</a> in a battle <small> at <fmt:formatDate type="both"
+										${newsItem.battleShred.owner.username} added a shred
+										in a  <a
+											href="<c:url value='/battle/'/>${newsItem.battleId}">battle</a>
+											 <small> at <fmt:formatDate type="both"
 												dateStyle="long" timeStyle="long"
 												value="${newsItem.battleShred.timeCreated}" />
 										</small>
@@ -259,26 +261,26 @@
 									<div class="row-fluid">
 										<div class="span5">
 											<img class="imageClipped newsItemImage"
-												src="<c:url value="/resources/images/profiles/"/>${newsItem.battle.battler.shredder.profileImagePath}" />
+												src="<c:url value="/resources/images/profiles/"/>${newsItem.battler.shredder.profileImagePath}" />
 										</div>
 										<div class="span2">
 											<h3>
-												<a href="<c:url value='/battle/'/>${newsItem.battle.id}">
+												<a href="<c:url value='/battle/'/>${newsItem.id}">
 													VS </a>
 											</h3>
 										</div>
 										<div class="span5">
 											<img class="imageClipped newsItemImage"
-												src="<c:url value="/resources/images/profiles/"/>${newsItem.battle.battlee.shredder.profileImagePath}" />
+												src="<c:url value="/resources/images/profiles/"/>${newsItem.battlee.shredder.profileImagePath}" />
 										</div>
 									</div>
 									<div class="row-fluid">
 										<div class="span5">
-											<p>${newsItem.battle.battler.shredder.username}</p>
+											<p>${newsItem.battler.shredder.username}</p>
 										</div>
 										<div class="span2"></div>
 										<div class="span5">
-											<p>${newsItem.battle.battlee.shredder.username}</p>
+											<p>${newsItem.battlee.shredder.username}</p>
 										</div>
 									</div>
 									</br>

@@ -93,10 +93,10 @@ public class LoginController {
 	private void populateSessionObject(Shredder shredder, HttpSession session) {
 	    long t1 = System.currentTimeMillis();
 		List <Shredder> fans = shredderService.getFansForShredderWithId(shredder.getId());
-		logger.info("Get fans, Time: " + (t1 - System.currentTimeMillis()) + ", " + (t1 - System.currentTimeMillis())/1000 );
+		logger.info("Get fans, Time: " + (System.currentTimeMillis()-t1) + ", " + (System.currentTimeMillis()-t1)/1000 );
 		List <Battle> battleRequests = battleService.getBattleRequestsForShredderWithId(shredder.getId());
 		long t2 =System.currentTimeMillis(); 
-		logger.info("Get battlerequests, Time: " + (t2 - System.currentTimeMillis()) + ", " + (t2 - System.currentTimeMillis())/1000 );
+		logger.info("Get battlerequests, Time: " + (System.currentTimeMillis()-t2) + ", " + (System.currentTimeMillis()-t2)/1000 );
 		session.setAttribute("shredder", shredder);
 		session.setAttribute("fans", fans);
 		session.setAttribute("battleRequests",battleRequests );
@@ -171,7 +171,7 @@ public class LoginController {
 	
 	private void populateStatelessShredPoolModel(Model model, Shredder shredder, HttpSession session) {
 	    long t2 = System.currentTimeMillis();
-	    Map<String, List<ShredNewsItem>> shredNewsItems = dbFinder.getShredNews(shredder);
+	    Map<String, List/*<ShredNewsItem>*/> shredNewsItems = dbFinder.getShredNews(shredder);
 	    logger.info("shred news: Time " + (System.currentTimeMillis()-t2) + ", " + (System.currentTimeMillis()-t2)/1000); 
 	    model.addAttribute(ShredNewsServiceImpl.BATTLE_SHREDS, shredNewsItems.get(ShredNewsServiceImpl.BATTLE_SHREDS));
 		model.addAttribute(ShredNewsServiceImpl.FANEES_NEWS, shredNewsItems.get(ShredNewsServiceImpl.FANEES_NEWS));
@@ -270,10 +270,12 @@ public class LoginController {
 	
 	@RequestMapping(value={"/login", "/",""}, method = RequestMethod.GET)
 	public String login(ModelMap model) {
-		logger.info("Login, / requested!");
+		logger.info("/ requested!");
 		model.addAttribute(new Shredder());
 		/* Uncomment if slow */
-		List <Shred> shreds = dbFinder.getTopShreds();
+		long t1 = System.currentTimeMillis();
+		List <Shred> shreds = dbFinder.getTopShreds(); 
+		logger.info("/ time: " + (System.currentTimeMillis() - t1) + ", " + (System.currentTimeMillis() - t1) / 1000);
 		model.addAttribute("topShreds", shreds );
 		/* Uncomment if slow */
 		return "home"; 

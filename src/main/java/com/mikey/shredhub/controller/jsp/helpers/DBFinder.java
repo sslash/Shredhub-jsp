@@ -35,14 +35,14 @@ public class DBFinder {
 		return sessionIdentityMap.getTopShreds();
 	}
 	
-	public Map<String, List<ShredNewsItem>> getShredNews(Shredder shredder) {
+	public Map<String, List/*<ShredNewsItem>*/> getShredNews(Shredder shredder) {
 		Object res = sessionIdentityMap.get(SessionIdentityMap.SHRED_NEWS);
-		Map<String, List<ShredNewsItem>> shredNewsItems = null;
+		Map<String, List/*<ShredNewsItem>*/> shredNewsItems = null;
 		if ( res == null) {
 			shredNewsItems = shredNewsService.getLatestShredNewsItems(shredder, 20);
 			sessionIdentityMap.set(SessionIdentityMap.SHRED_NEWS,shredNewsItems );
 		} else {
-			shredNewsItems = (Map<String, List<ShredNewsItem>>) res;
+			shredNewsItems = (Map<String, List/*<ShredNewsItem>*/>) res;
 		}
 		return shredNewsItems;
 	}

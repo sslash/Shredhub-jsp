@@ -1,4 +1,23 @@
--- Get Faneee id
+
+SELECT b.id as b_id, s1.username as s1_u, s2.username as s2_u,  s1.id as s1_id,
+s2.id as s2_id FROM Battle b, Shredder s1, Shredder s2
+WHERE (shredder1 IN (SELECT f.FaneeId FROM Fan f, Shredder s WHERE f.FanerId = s.id AND f.FanerId = 4089) 
+OR shredder2 IN (SELECT f.FaneeId FROM Fan f, Shredder s WHERE f.FanerId = s.id AND f.FanerId = 4089)) 
+AND shredder1 != 4089 AND shredder2 != 4089 AND b.Shredder1 = s1.id AND b.Shredder2 = s2.id ORDER BY b.TimeCreated DESC LIMIT 20; -- Get Faneee id
+
+
+
+SELECT b.id as b_id, s1.username as s1_u, s2.username as s2_u,
+s1.id as s1_id, s2.id as s2_id FROM Battle b, Shredder s1, Shredder s2
+WHERE (shredder1 IN (SELECT f.FaneeId FROM Fan f, Shredder s WHERE
+f.FanerId = s.id AND f.FanerId = ? OR shredder2 IN
+(SELECT f.FaneeId FROM Fan f, Shredder s WHERE 
+f.FanerId = s.id AND f.FanerId = ?)) AND shredder1 != ? AND shredder2 != ? 
+AND b.Shredder1 = s1.id AND b.Shredder2 = s2.id ORDER BY b.TimeCreated DESC LIMIT 20
+
+
+SELECT * FROM Shredder;
+
 SELECT f.FaneeId FROM Fan f, Shredder s WHERE f.FanerId = s.id AND f.FanerId = 6
 
 -- Get Fanee as shredders
