@@ -60,7 +60,7 @@
 
 				<div class="modal-body">
 					<form method="post" class="form-horizontal"
-						action="<c:url value="/shredder/"/>${shredder.id}/postShred"
+						action="<c:url value="/shred/"/>${shredder.id}/postShred"
 						enctype="multipart/form-data">
 
 						<div class="control-group">
@@ -106,9 +106,8 @@
 
 							<div class="span2">
 
-								<a href="" data-toggle="modal" class="newShredsFromFaneesAncor"
-									onclick="openVideoModal(${shred.id}); return false;"> <img
-									class="imageClipped"
+								<a href="<c:url value='/shredpool'/>/showShred/${shred.id}">
+									<img class="imageClipped"
 									src="<c:url value="/resources/vidz/"/>${shred.thumbnailpath}" />
 								</a>
 								<p class="lead">${shred.description}</p>
@@ -127,66 +126,12 @@
 			<hr id="shred" class="soften">
 
 
-			<div class="modal hide fade videoView" id="playVideoModal"
-				aria-hidden="true" tabindex="10" role="dialog"
-				aria-labelledby="myModalLabel">
-				<input type="hidden" id="modalShredId" value=""></input>
-
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">x</button>
-
-					<h2>description</h2>
-					<h4>username</h4>
-				</div>
-
-				<div class="modal-body">
-					<!-- video.js -->
-
-					<video id="videoInModal" class="video-js vjs-default-skin" controls
-						preload="auto" width="640">
-
-					</video>
-				</div>
-
-				<div class="modal-footer">
-					<div class="videoDetailsTmpl">
-						<div class="row-fluid">
-							<div class="span6">
-								<p>
-									<small id="createdAt"> Created at: </small>
-								</p>
-								<p class="lead" id="nRaters">Number of raters:</p>
-								<p class="lead" id="rating">Rating:</p>
-
-								<p class="small">
-									Rate it: <input type="range" id="rateValue" min="0" max="10"
-										name="rating" value="5">
-									<button id="rateButton" class="btn btn-small btn-primary"
-										onclick="rateShred($('#rateValue').val()); return false;">\m/</button>
-								</p>
-								<input type="text" name=text id="shredCommentText"
-									placeholder="Leave a comment!">
-								<button id="commentButton" class="btn btn-small btn-primary"
-									onclick="commentShred($('#shredCommentText').val()); return false;">Submit</button>
-							</div>
-
-							<div class="span6">
-								<p class="lead">Comments</p>
-								<table class="table table-condensed" id="commentTable">
-									<thead>
-										<tr>
-											<th>Text</th>
-											<th>By</th>
-											<th>At</th>
-										</tr>
-									</thead>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			<c:if test="${showView==true}">
+				<jsp:include page="showShred.jsp" />
+			</c:if>
+			
+			
+			
 			<div id="shredNews">
 				<h2>Shred News</h2>
 				<br>
@@ -203,8 +148,8 @@
 									begin="0" end="4">
 									<div class="row-fluid">
 										<div class="span4">
-											<a href=""
-												onclick="openVideoModal(${newsItem.shred.id}); return false;">
+											<a href="<c:url value='/shredpool'/>/showShred/${newsItem.shred.id}"
+												>
 												<img class="imageClipped newsItemImage"
 												src="<c:url value="/resources/vidz/"/>${newsItem.shred.thumbnailpath}"
 												width="20" />
@@ -360,8 +305,7 @@
 
 								<div class="row-fluid">
 									<div class="span6">
-										<a href="#"
-											onclick="openVideoModal(${newsItem.shred.id}); return false;"
+										<a href="<c:url value='/shredpool'/>/showShred/${shred.id}"
 											class="newShredsFromFaneesAncor"> <img
 											class="imageClipped"
 											src="<c:url value="/resources/vidz/"/>23shred1.jpg" />
@@ -407,8 +351,7 @@
 
 						<div class="span3">
 
-							<a href="#shredPool"
-								onclick="openVideoModal(${newsItem.shred.id}); return false;"
+							<a href="<c:url value='/shredpool'/>/showShred/${shred.id}"
 								class="newShredsFromFaneesAncor"> <img class="imageClipped"
 								src="<c:url value="/resources/vidz/"/>23shred1.jpg" />
 							</a>
@@ -457,7 +400,7 @@
 
 							<div class="span2">
 
-								<a href="#" onclick="openVideoModal(${shred.id}); return false;"
+								<a href="<c:url value='/shredpool'/>/showShred/${shred.id}"
 									class="newShredsFromFaneesAncor"> <img class="imageClipped"
 									src="<c:url value="/resources/vidz/"/>${shred.thumbnailpath}" />
 								</a>

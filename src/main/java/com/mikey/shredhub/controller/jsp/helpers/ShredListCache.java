@@ -7,8 +7,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mikey.shredhub.api.domain.Shred;
-import com.mikey.shredhub.jsp.controller.LoginController;
+import com.mikey.shredhub.jsp.controller.HomeController;
 
+/**
+ * Holds a list of shreds that are populated on the model.
+ * A function in another class i responsible for fetching the 
+ * shred set from the database. THis class only knows where in 
+ * the class we currently are.
+ * 
+ * @author michaekg
+ *
+ */
 public class ShredListCache {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ShredListCache.class);

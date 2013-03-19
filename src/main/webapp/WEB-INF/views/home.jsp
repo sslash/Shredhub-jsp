@@ -32,6 +32,13 @@
 									data-keyboard="true" data-toggle="modal" data-backdrop="true"
 									data-target="#signInModal">Sign in</a>
 						</li>
+						
+						<li class="">
+							<p class="navbar-text pull-right">
+								<a href="#" role="button" class="navbar-link"
+									data-keyboard="true" data-toggle="modal" data-backdrop="true"
+									data-target="#newShredder">Register</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -98,66 +105,9 @@
 		<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 	</div>
 	
-		<div class="modal hide fade videoView" id="playVideoModal"
-				aria-hidden="true" tabindex="10" role="dialog"
-				aria-labelledby="myModalLabel">
-				<input type="hidden" id="modalShredId" value=""></input>
-
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">x</button>
-
-					<h2>description</h2>
-					<h4>username</h4>
-				</div>
-
-				<div class="modal-body">
-					<!-- video.js -->
-
-					<video id="videoInModal" class="video-js vjs-default-skin" controls
-						preload="auto" width="640">
-
-					</video>
-				</div>
-
-				<div class="modal-footer">
-					<div class="videoDetailsTmpl">
-						<div class="row-fluid">
-							<div class="span6">
-								<p>
-									<small id="createdAt"> Created at: </small>
-								</p>
-								<p class="lead" id="nRaters">Number of raters:</p>
-								<p class="lead" id="rating">Rating:</p>
-
-								<p class="small">
-									Rate it: <input type="range" id="rateValue" min="0" max="10"
-										name="rating" value="5">
-									<button id="rateButton" class="btn btn-small btn-primary"
-										onclick="rateShred($('#rateValue').val()); return false;">\m/</button>
-								</p>
-								<input type="text" name=text id="shredCommentText"
-									placeholder="Leave a comment!">
-								<button id="commentButton" class="btn btn-small btn-primary"
-									onclick="commentShred($('#shredCommentText').val()); return false;">Submit</button>
-							</div>
-
-							<div class="span6">
-								<p class="lead">Comments</p>
-								<table class="table table-condensed" id="commentTable">
-									<thead>
-										<tr>
-											<th>Text</th>
-											<th>By</th>
-											<th>At</th>
-										</tr>
-									</thead>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+		<c:if test="${showView==true}">
+			<jsp:include page="showShred.jsp" />
+		</c:if>
 
 
 
@@ -169,10 +119,9 @@
 				aria-hidden="true">x</button>
 			<h3 id="myModalLabel">Sign in</h3>
 		</div>
-
 		<!-- FORM INPUT -->
 		<div class="modal-body">
-			<form name="f" class="form-inline" action="loginShredder" method="POST"> 
+			<form name="f" class="form-inline" action="<c:url value='/'/>loginShredder" method="POST"> 
 				<!-- action="<c:url value='j_spring_security_check' />" method="POST"> -->
 				
 
@@ -205,9 +154,10 @@
 				
 				<div class="span4">						
 						
-							<a href="#shredPool"
-								onclick="openVideoModal(${shred.id}); return false;"
-								class="newShredsFromFaneesAncor"> <img class="imageClipped"
+							<a href="<c:url value='/'/>showShred/${shred.id}"class="newShredsFromFaneesAncor"> 
+								<!-- onclick="openVideoModal(${shred.id}); return false;"-->
+								
+								<img class="imageClipped"
 								src="<c:url value="/resources/vidz/"/>${shred.thumbnailpath}" />
 							</a>
 							<p class="lead">${shred.description}</p>

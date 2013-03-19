@@ -31,19 +31,27 @@ public class DBFinder {
 	@Autowired
 	private ShredService shredService;
 	
-	public List <Shred> getTopShreds() {
+	/* dont think its wise to put top shreds on session.
+	 * They are supposed to be dynamic and change frequently, therefore
+	 * they should be fetched from database every time!
+	 * 
+	 * public List <Shred> getTopShreds() {
 		return sessionIdentityMap.getTopShreds();
-	}
+	}*/
 	
-	public Map<String, List/*<ShredNewsItem>*/> getShredNews(Shredder shredder) {
-		Object res = sessionIdentityMap.get(SessionIdentityMap.SHRED_NEWS);
-		Map<String, List/*<ShredNewsItem>*/> shredNewsItems = null;
-		if ( res == null) {
+	/*
+	 * Also, I don't think its smart to put shred news on session
+	 * Therefore, I have commented session storage for this out..
+	 */
+	public Map<String, List> getShredNews(Shredder shredder) {
+		//Object res = sessionIdentityMap.get(SessionIdentityMap.SHRED_NEWS);
+		Map<String, List> shredNewsItems = null;
+		//if ( res == null) {
 			shredNewsItems = shredNewsService.getLatestShredNewsItems(shredder, 20);
-			sessionIdentityMap.set(SessionIdentityMap.SHRED_NEWS,shredNewsItems );
-		} else {
-			shredNewsItems = (Map<String, List/*<ShredNewsItem>*/>) res;
-		}
+		//	sessionIdentityMap.set(SessionIdentityMap.SHRED_NEWS,shredNewsItems );
+		//} else {
+			//shredNewsItems = (Map<String, List>) res;
+		//}
 		return shredNewsItems;
 	}
 	

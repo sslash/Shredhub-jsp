@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mikey.shredhub.api.domain.Shred;
 import com.mikey.shredhub.api.domain.Shredder;
@@ -45,7 +46,6 @@ public class ShredController {
 	Shred postComment(@PathVariable int shredId,
 						@RequestParam("text") String text, HttpSession session) throws Exception  {
 		
-		// TODO: Create validator
 		Shredder user = (Shredder) session.getAttribute("shredder");
 		logger.info("Inside post comment: " +  shredId + " shredder id  =" + user.getId() + " text = " + text);
 		shredService.addCommentForShred(text, shredId, user.getId() );		
@@ -64,8 +64,33 @@ public class ShredController {
 		shredService.deleteCommentForShred(commentId );		
 		
 		return shredService.getShredById(shredId + "");
-	}	
+	}
 	
+	@RequestMapping(value = "/{shredderid}/postShred", method = RequestMethod.POST)
+	public String postShred(@PathVariable int shredderid,
+			@RequestParam("text") String text,
+			@RequestParam("tags") String tags,
+			@RequestParam("file") MultipartFile file, HttpSession session,
+			Model model) throws Exception {
+
+		logger.info("Inside post shred: " + shredderid + " ext= " + text + "tags= "
+				+ tags);
+
+		if (!file.isEmpty()) {
+			// Add the shred!
+			Pattern splitPat = Pattern.compile(",\\s*");
+			String[] tagsArr = splitPat.split(tags);
+			shredService.addShredForShredderWithId(text, shredderid, tagsArr, file);
+
+			// store the bytes somewhere
+			return "redirect:/theShredPool";
+		} else {
+			System.out.println("FIle is empty..");
+			return "redirect:/theShredPool"; // should fail
+		}
+	}
+	
+	// Ajax supported function to fetch a Shred
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	Shred getShred(@PathVariable String id) {
@@ -88,49 +113,6 @@ public class ShredController {
 		}
 		logger.info("New rate was added");
 		return shredService.getShredById("" + shredId);
-	}	
-	
-	@RequestMapping(value="/recommendations", method = RequestMethod.GET, params="action=highestRating")
-	public String getRecommendedShredsByRating(Model model, HttpSession session) {
-		logger.info("Inside get shreds based on rating");
-		addShredNewsToModel((Shredder) session.getAttribute("shredder"), model);
-		model.addAttribute("shreds", recommendationService.getRecsBasedOnRatings(10));		
-		return "/theShredPool";
-	}	
-	
-	@RequestMapping(value="/recommendations", method = RequestMethod.GET, params="action=fanShreds")
-	public String getRecommendedShredsFromFans(@RequestParam("shredderId") int shredderId, Model model, HttpSession session) {
-		logger.info("Inside get shreds based on fanse");
-		addShredNewsToModel((Shredder) session.getAttribute("shredder"), model);
-		model.addAttribute("shreds", recommendationService.getRecsBasedOnFansOfShredder(shredderId));		
-		return "/theShredPool";
-	}	
-	
-	@RequestMapping(value="/recommendations", method = RequestMethod.GET, params="action=shredsFromShreddersYouMightKnow")
-	public String getRecommendedShredsFromShreddersShredderMightKnow(@RequestParam("shredderId") int shredderId, Model model, HttpSession session) {
-		logger.info("Inside get shreds based on shredders shredder might know");
-		addShredNewsToModel((Shredder) session.getAttribute("shredder"), model);
-		model.addAttribute("shreds", recommendationService.getRecsBasedOnShreddersShredderMightKnow(shredderId, 0));	
-		System.out.println("GOT: ");
-		for ( Shred s : recommendationService.getRecsBasedOnShreddersShredderMightKnow(shredderId, 0)) 
-			System.out.println(s.toString());
-		
-		return "/theShredPool";
 	}
-	
-	@RequestMapping(value="/recommendations", method = RequestMethod.GET, params="action=all")
-	public String getAllShreds( Model model, HttpSession session) {
-		addShredNewsToModel((Shredder) session.getAttribute("shredder"), model);
-		logger.info("Inside get all shreds");
-		model.addAttribute("shreds", shredService.getAllShreds());	
-		
-		return "/theShredPool";
-	}
-	
-	private void addShredNewsToModel(Shredder shredder, Model model) {
-		model.addAttribute("news", shredNewsService.getLatestShredNewsItems(shredder, 20));		
-	}
-
-	
 	
 }

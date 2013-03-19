@@ -37,5 +37,6 @@
 <link
 	href="<c:url value="/resources/styling/bootstrap/"/>css/bootstrap-responsive.css"
 	rel="stylesheet">
+<script src="<c:url value="/resources/styling/bootstrap/"/>js/jquery.js"></script>
 
 </head>

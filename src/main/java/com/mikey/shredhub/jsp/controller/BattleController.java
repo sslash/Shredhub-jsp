@@ -1,8 +1,6 @@
 package com.mikey.shredhub.jsp.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,13 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mikey.shredhub.api.domain.Battle;
-import com.mikey.shredhub.api.domain.Shred;
 import com.mikey.shredhub.api.service.BattleService;
 import com.mikey.shredhub.api.service.ShredderService;
 import com.mikey.shredhub.api.utils.ImageUploadException;
 
 @Controller
 @RequestMapping("/battle")
+// TODO: Create get battles that displays every battles for the user
 public class BattleController {
 	private static final Logger logger = LoggerFactory.getLogger(BattleController.class);	
 	
@@ -99,9 +97,6 @@ public class BattleController {
 		logger.info("Inside battle shreddee.Id = " + shredeeId + " shredder= "
 				+ shredderId + " style = " + battleStyle);
 
-		// TODO: add error checking
-
-		// TODO: Set this another way
 		String vidEnding = shredVideo.getOriginalFilename().split("\\.")[1];
 		String name = shredderId + "-" + shredeeId + "-" + 1 + "." + vidEnding;
 		battleService.addShredBattleRequest(shredderId, shredeeId, name,

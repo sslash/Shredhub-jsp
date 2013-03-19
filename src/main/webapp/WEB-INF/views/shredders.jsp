@@ -30,6 +30,7 @@
 				<a href="<c:url value='/shredder/'/>${shredder.id}">${shredder.username}</a>
 				<p class="lead">${shredder.description}</p>
 				<p class="lead">Level: ${shredder.level.level}</p>
+				<a href="<c:url value="/shredder/"/>${shredder.id}/?action=follow">Become fan</a>
 
 				<!-- /span10 -->
 			</div>
@@ -38,10 +39,12 @@
 		<hr>
 		</c:forEach>
 		<!-- /marketing -->
+		<a href="<c:url value='/shredder/'/>nextPage">Next</a>
 	</div>
 	<!-- /container -->
 </div>
 <hr>
+
 
 
 	<!--/.fluid-container-->
@@ -58,6 +61,6 @@
 	<script
 		src="<c:url value="/resources/styling/bootstrap/"/>js/prettify.js"></script>
 
-<jsp:include page="header.jsp" />
+<jsp:include page="footer.jsp" />
 </body>
 </html>
