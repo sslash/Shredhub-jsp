@@ -56,7 +56,7 @@
  
 		   authorities-by-username-query="
 		      select s.Username, ur.Authority from Shredder s, UserRole ur 
-		      where s.Id = ur.ShredderId and s.Username =?  "  
+		      where s.Id = ur.ShredderId and s.Username =? "  
 		/>
 	   </authentication-provider>
 	</authentication-manager>

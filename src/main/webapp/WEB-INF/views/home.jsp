@@ -121,10 +121,7 @@
 		</div>
 		<!-- FORM INPUT -->
 		<div class="modal-body">
-			<form name="f" action="<c:url value='j_spring_security_check' />" class="form-inline"  method="POST" >
-			
-			 <!--  action="<c:url value='/'/>loginShredder" method="POST">--> 
-				  
+			<form name="f" action="<c:url value='j_spring_security_check' />" class="form-inline"  method="POST" >			  
 				
 
 				<div class="control-group">
