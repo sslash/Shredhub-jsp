@@ -1,25 +1,25 @@
 package com.mikey.shredhub.jsp.controller;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.mikey.shredhub.api.domain.Battle;
 import com.mikey.shredhub.api.domain.Shred;
@@ -30,7 +30,6 @@ import com.mikey.shredhub.api.service.ShredNewsService;
 import com.mikey.shredhub.api.service.ShredNewsServiceImpl;
 import com.mikey.shredhub.api.service.ShredService;
 import com.mikey.shredhub.api.service.ShredderService;
-import com.mikey.shredhub.api.utils.ImageUploadException;
 import com.mikey.shredhub.controller.jsp.helpers.DBFinder;
 import com.mikey.shredhub.controller.jsp.helpers.ShredListCache;
 
@@ -75,37 +74,37 @@ public class HomeController {
 
 	
 
-	/*@RequestMapping(value="/home", method = RequestMethod.GET)
+	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public String loginSuccess(ModelMap model, Principal principal, HttpSession session) {
-	//	User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	//	String username = user.getUsername();
-	//	String password = user.getPassword();
-	//	Shredder shredder = shredderService.loginShredder(
-		//		username, password);
-		//logger.info("Login success! Welcome" + username);
-	 
-		// this.populateSessionObject(shredder, session);		
-		return "redirect:/shredpool"; 
-	}*/
-	
-	@RequestMapping(value="/loginShredder", method = RequestMethod.POST)
-	public String loginSuccess(
-			@RequestParam("j_username") String username, @RequestParam("j_password") String password, 
-			Model model, HttpSession session) {
-		logger.info("loginShredder requested! username: " + username + ", password: " + password );
-		long t1 = System.currentTimeMillis();
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = user.getUsername();
+		String password = user.getPassword();
 		Shredder shredder = shredderService.loginShredder(
 				username, password);
-		if ( shredder == null) {
-			logger.info("Wrong username or password!");
-			return "redirect:/login";
-		}
-		
-		logger.info("Login success! Welcome" + username + ", Time: " + (System.currentTimeMillis()-t1) + ", " + ( System.currentTimeMillis()-t1)/1000 );
+		logger.info("Login success! Welcome" + username);
 	 
 		this.populateSessionObject(shredder, session);		
-		return theShredPool(model, session); 
+		return "redirect:/shredpool"; 
 	}
+	
+//	@RequestMapping(value="/loginShredder", method = RequestMethod.POST)
+//	public String loginSuccess(
+//			@RequestParam("j_username") String username, @RequestParam("j_password") String password, 
+//			Model model, HttpSession session) {
+//		logger.info("loginShredder requested! username: " + username + ", password: " + password );
+//		long t1 = System.currentTimeMillis();
+//		Shredder shredder = shredderService.loginShredder(
+//				username, password);
+//		if ( shredder == null) {
+//			logger.info("Wrong username or password!");
+//			return "redirect:/login";
+//		}
+//		
+//		logger.info("Login success! Welcome" + username + ", Time: " + (System.currentTimeMillis()-t1) + ", " + ( System.currentTimeMillis()-t1)/1000 );
+//	 
+//		this.populateSessionObject(shredder, session);		
+//		return theShredPool(model, session); 
+//	}
 	
 	private void populateSessionObject(Shredder shredder, HttpSession session) {
 	    long t1 = System.currentTimeMillis();

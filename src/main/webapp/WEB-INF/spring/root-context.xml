@@ -50,6 +50,6 @@
 	<tx:annotation-driven transaction-manager="txManager"/>
 	
 	<!-- Configures Shared Security Layer -->
-	<!-- <import resource="security.xml" />  -->
+	 <!-- <import resource="security.xml" /> --> 
 
 </beans>
