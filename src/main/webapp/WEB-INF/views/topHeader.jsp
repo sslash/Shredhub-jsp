@@ -23,7 +23,7 @@
 
 
 <!-- STYLES -->
-<script src="<c:url value="/resources/styling/bootstrap/"/>js/jquery.js"></script>
+<script src="<c:url value="/resources/scripts/"/>jquery-min.js"></script>
 <link
 	href="<c:url value="/resources/styling/bootstrap/"/>css/bootstrap.min.css"
 	rel="stylesheet">
