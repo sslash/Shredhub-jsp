@@ -83,10 +83,10 @@ public class ShredController {
 			shredService.addShredForShredderWithId(text, shredderid, tagsArr, file);
 
 			// store the bytes somewhere
-			return "redirect:/theShredPool";
+			return "redirect:/shredpool";
 		} else {
 			System.out.println("FIle is empty..");
-			return "redirect:/theShredPool"; // should fail
+			return "redirect:/shredpool"; // should fail
 		}
 	}
 	
