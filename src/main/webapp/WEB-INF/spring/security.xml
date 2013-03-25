@@ -17,7 +17,7 @@
         <intercept-url pattern="/listAccounts.html" access="isRememberMe()" />
         <intercept-url pattern="/post.html" access="hasRole('ROLE_TELLER')" />
         -->
-        <http auto-config="true">
+        <http auto-config="true" disable-url-rewriting="true">
 		<intercept-url pattern="/theShredPool*" access="ROLE_SHREDDER" />
 		<intercept-url pattern="/battle*" access="ROLE_SHREDDER" />
 		<intercept-url pattern="/battle/**" access="ROLE_SHREDDER" />	
@@ -27,6 +27,8 @@
 		<form-login login-page="/login" default-target-url="/home"
 			authentication-failure-url="/loginfailed" />
 		<logout logout-success-url="/logout" /> 
+        
+   
         
 <!--
     Uncomment to enable X509 client authentication support
