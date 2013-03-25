@@ -57,7 +57,7 @@ public class ShredListCache {
 	}
 	
 	public List <Shred> getNextSet() {
-		logger.info("Getting next cache set! Get from " + currIndex + ", ending at: " + (currIndex + setSize)+ ", page: " + page);
+		//logger.info("Getting next cache set! Get from " + currIndex + ", ending at: " + (currIndex + setSize)+ ", page: " + page);
 		currShreds = new ArrayList<Shred>();
 		int end = currIndex + setSize;
 		for ( ; currIndex < end && currIndex < shreds.size(); currIndex ++) {
