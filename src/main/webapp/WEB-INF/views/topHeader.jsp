@@ -21,22 +21,22 @@
 <meta name="author" content="">
 
 
+
 <!-- STYLES -->
+<script src="<c:url value="/resources/styling/bootstrap/"/>js/jquery.js"></script>
 <link
-	href="<c:url value="/resources/styling/bootstrap/"/>css/bootstrap.css"
+	href="<c:url value="/resources/styling/bootstrap/"/>css/bootstrap.min.css"
 	rel="stylesheet">
-<link
+<!-- <link
 	href="<c:url value="/resources/styling/bootstrap/"/>css/prettify.css"
-	rel="stylesheet">
+	rel="stylesheet"> -->
 <link href="<c:url value="/resources/styling/bootstrap/"/>css/docs.css"
 	rel="stylesheet">
-<link href="<c:url value="/resources/styling/"/>video-js.css"
+<link href="<c:url value="/resources/styling/"/>video-js.min.css"
 	rel="stylesheet">
 <link href="<c:url value="/resources/styling/"/>main.css"
 	rel="stylesheet">
 <link
-	href="<c:url value="/resources/styling/bootstrap/"/>css/bootstrap-responsive.css"
+	href="<c:url value="/resources/styling/bootstrap/"/>css/bootstrap-responsive.min.css"
 	rel="stylesheet">
-<script src="<c:url value="/resources/styling/bootstrap/"/>js/jquery.js"></script>
-
 </head>

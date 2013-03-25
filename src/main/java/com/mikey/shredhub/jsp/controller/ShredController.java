@@ -47,9 +47,9 @@ public class ShredController {
 						@RequestParam("text") String text, HttpSession session) throws Exception  {
 		
 		Shredder user = (Shredder) session.getAttribute("shredder");
-		logger.info("Inside post comment: " +  shredId + " shredder id  =" + user.getId() + " text = " + text);
+		//logger.info("Inside post comment: " +  shredId + " shredder id  =" + user.getId() + " text = " + text);
 		shredService.addCommentForShred(text, shredId, user.getId() );		
-		logger.info("Comment was added..");
+		//logger.info("Comment was added..");
 		
 		return shredService.getShredById(shredId + "");
 	}	
@@ -60,7 +60,7 @@ public class ShredController {
 		
 		// TODO: Check if the writer of the comment is the commentor
 		Shredder user = (Shredder) session.getAttribute("shredder");
-		logger.info("Inside delete comment: comment id = " + commentId);
+		//logger.info("Inside delete comment: comment id = " + commentId);
 		shredService.deleteCommentForShred(commentId );		
 		
 		return shredService.getShredById(shredId + "");
@@ -73,8 +73,8 @@ public class ShredController {
 			@RequestParam("file") MultipartFile file, HttpSession session,
 			Model model) throws Exception {
 
-		logger.info("Inside post shred: " + shredderid + " ext= " + text + "tags= "
-				+ tags);
+	//	logger.info("Inside post shred: " + shredderid + " ext= " + text + "tags= "
+		//		+ tags);
 
 		if (!file.isEmpty()) {
 			// Add the shred!
@@ -85,7 +85,7 @@ public class ShredController {
 			// store the bytes somewhere
 			return "redirect:/shredpool";
 		} else {
-			System.out.println("FIle is empty..");
+			//System.out.println("FIle is empty..");
 			return "redirect:/shredpool"; // should fail
 		}
 	}
@@ -94,7 +94,7 @@ public class ShredController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	Shred getShred(@PathVariable String id) {
-		logger.info("Get shred requested! Id: " + id);
+		//logger.info("Get shred requested! Id: " + id);
 		return shredService.getShredById(id);
 	}
 	
@@ -102,16 +102,16 @@ public class ShredController {
 	public @ResponseBody
 	Shred rateShred(@PathVariable int shredId,
 							@RequestParam("rating") int rating, Model model){
-		logger.info("Inside rate shred. shred = " + shredId + " rating = " + rating);
+		//logger.info("Inside rate shred. shred = " + shredId + " rating = " + rating);
 		try {
 			shredService.rateShred(shredId, rating);
 			
 		} catch (IllegalShredArgumentException e) {
-			logger.info("Failed to rate shred: " + e.getMessage());
+			//logger.info("Failed to rate shred: " + e.getMessage());
 			model.addAttribute("errorMsg", "Failed to rate shred: " + e.getMessage() );
 			return null;
 		}
-		logger.info("New rate was added");
+		//logger.info("New rate was added");
 		return shredService.getShredById("" + shredId);
 	}
 	

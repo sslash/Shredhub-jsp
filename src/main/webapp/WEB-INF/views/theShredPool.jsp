@@ -4,27 +4,7 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<!-- Put here because the modal won't load properly unless -->
-<!DOCTYPE html>
-<html lang="en">
 <jsp:include page="topHeader.jsp" />
-
-<script type="text/javascript">
-	function openCommentBox(id) {
-		var tableId = "#commentBox" + id;
-		if ($(tableId).is(":visible")) {
-			$(tableId).hide();
-		} else {
-			$(tableId).show();
-		}
-	}
-
-	function showNewRateValue(newValue, postfixId) {
-		var id = "range" + postfixId;
-		document.getElementById(id).innerHTML = newValue;
-	}
-</script>
-
 <body>
 
 	<jsp:include page="header.jsp" />
@@ -432,14 +412,7 @@
 				</div>
 			</div>
 		</div>
-
-
-
-		<!-- Le javascript
-    ================================================== -->
-		<!-- Placed at the end of the document so the pages load faster -->
-
-		<jsp:include page="footer.jsp" />
+<jsp:include page="footer.jsp" />
 		
 </body>
 </html>

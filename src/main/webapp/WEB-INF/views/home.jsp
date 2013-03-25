@@ -124,7 +124,7 @@
 			<form name="f" action="<c:url value='j_spring_security_check' />" class="form-inline"  method="POST" >			  
 				
 
-				<div class="control-group">
+				<div class="control-group"> 
 					
 					<input type="text" class="input-small" placeholder="Username"
 						name="j_username"> <input type="password"

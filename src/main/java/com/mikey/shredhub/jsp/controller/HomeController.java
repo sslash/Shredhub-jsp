@@ -107,13 +107,13 @@ public class HomeController {
 //	}
 	
 	private void populateSessionObject(Shredder shredder, HttpSession session) {
-	    long t1 = System.currentTimeMillis();
+	    //long t1 = System.currentTimeMillis();
 		List <Shredder> fans = shredderService.getFansForShredderWithId(shredder.getId());
 		
-		logger.info("Get fans, Time: " + (System.currentTimeMillis()-t1) + ", " + (System.currentTimeMillis()-t1)/1000 );
+		//logger.info("Get fans, Time: " + (System.currentTimeMillis()-t1) + ", " + (System.currentTimeMillis()-t1)/1000 );
 		List <Battle> battleRequests = battleService.getBattleRequestsForShredderWithId(shredder.getId());
-		long t2 =System.currentTimeMillis(); 
-		logger.info("Get battlerequests, Time: " + (System.currentTimeMillis()-t2) + ", " + (System.currentTimeMillis()-t2)/1000 );
+		//long t2 =System.currentTimeMillis(); 
+		//logger.info("Get battlerequests, Time: " + (System.currentTimeMillis()-t2) + ", " + (System.currentTimeMillis()-t2)/1000 );
 		session.setAttribute("shredder", shredder);
 		session.setAttribute("fans", fans);
 		session.setAttribute("battleRequests",battleRequests );
@@ -123,18 +123,19 @@ public class HomeController {
 	@RequestMapping(value = {"/loginShredder"},params = "action=nextShredSet", method = RequestMethod.GET)
 	public String nextShred( Model model, HttpSession session) {
 		Shredder shredder = (Shredder) session.getAttribute("shredder");
-		logger.info("nextShred() requested! Shredder: " + shredder.getUsername() + ", id=" + shredder.getId());
+		//logger.info("nextShred() requested! Shredder: " + shredder.getUsername() + ", id=" + shredder.getId());
 		ShredListCache fanShredCache = (ShredListCache) session.getAttribute("fanShredCache");
 		
-		logger.info("shoul fetch?");
+		//logger.info("shoul fetch?");
 		if ( fanShredCache.shouldFetch() ) {
-			logger.info("Yes. ");
+			//logger.info("Yes. ");
 			List <Shred> fanShreds = shredService.getFanShreds(shredder.getId(), fanShredCache.advancePage() );
-			logger.info("Number of new shreds: " + fanShreds.size());
+			//logger.info("Number of new shreds: " + fanShreds.size());
 			fanShredCache.resetShredSet(fanShreds);
-		}else {
-			logger.info("No.. ");
 		}
+		//else {
+			//logger.info("No.. ");
+		//}
 		
 		fanShredCache.getNextSet();
 		this.populateStatefullShredPoolModel(model, shredder, session);
@@ -150,18 +151,19 @@ public class HomeController {
 	@RequestMapping(value = {"/loginShredder"},params = "action=nextHighRatingShredSet", method = RequestMethod.GET)
 	public String nextHighRatingShredSet( Model model, HttpSession session) {
 		Shredder shredder = (Shredder) session.getAttribute("shredder");
-		logger.info("nextHighRatingShredSet() requested! Shredder: " + shredder.getUsername() + ", id=" + shredder.getId());
+		//logger.info("nextHighRatingShredSet() requested! Shredder: " + shredder.getUsername() + ", id=" + shredder.getId());
 		ShredListCache topShredCache = (ShredListCache) session.getAttribute("topShredCache");
 		
-		logger.info("shoul fetch top shreds?");
+		//logger.info("shoul fetch top shreds?");
 		if ( topShredCache.shouldFetch() ) {
-			logger.info("Yes. ");
+			//logger.info("Yes. ");
 			List <Shred> topShreds = shredService.getTopShredsByRating(topShredCache.advancePage() );
-			logger.info("Number of new shreds: " + topShreds.size());
+			//logger.info("Number of new shreds: " + topShreds.size());
 			topShredCache.resetShredSet(topShreds);
-		}else {
-			logger.info("No.. ");
 		}
+		//else {
+			//logger.info("No.. ");
+		//}
 		
 		topShredCache.getNextSet();
 		
@@ -172,18 +174,19 @@ public class HomeController {
 	@RequestMapping(value = {"/loginShredder"},params = "action=nextMightKnowShredsSet", method = RequestMethod.GET)
 	public String nextMightKnowShredsSet( Model model, HttpSession session) {
 		Shredder shredder = (Shredder) session.getAttribute("shredder");
-		logger.info("nextMightKnowShredsSet() requested! Shredder: " + shredder.getUsername() + ", id=" + shredder.getId());
+		//logger.info("nextMightKnowShredsSet() requested! Shredder: " + shredder.getUsername() + ", id=" + shredder.getId());
 		ShredListCache mightKnowShredsCache = (ShredListCache) session.getAttribute("mightKnowShredsCache");
 		
-		logger.info("shoul fetch top shreds?");
+		//logger.info("shoul fetch top shreds?");
 		if ( mightKnowShredsCache.shouldFetch() ) {
-			logger.info("Yes. ");
+			//logger.info("Yes. ");
 			List <Shred> topShreds = recommendationService.getRecsBasedOnShreddersShredderMightKnow(shredder.getId(), mightKnowShredsCache.advancePage() );
-			logger.info("Number of new shreds: " + topShreds.size());
+			//logger.info("Number of new shreds: " + topShreds.size());
 			mightKnowShredsCache.resetShredSet(topShreds);
-		}else {
-			logger.info("No.. ");
 		}
+		//else {
+			//logger.info("No.. ");
+	//	}
 		
 		mightKnowShredsCache.getNextSet();
 		
@@ -210,9 +213,9 @@ public class HomeController {
 	 * @param session contains updated versions of the shredlistcache.
 	 */
 	private void populateStatefullShredPoolModel(Model model, Shredder shredder, HttpSession session) {
-	    long t2 = System.currentTimeMillis();
+	   // long t2 = System.currentTimeMillis();
 	    Map<String, List/*<ShredNewsItem>*/> shredNewsItems = dbFinder.getShredNews(shredder);
-	    logger.info("shred news: Time " + (System.currentTimeMillis()-t2) + ", " + (System.currentTimeMillis()-t2)/1000); 
+	    //logger.info("shred news: Time " + (System.currentTimeMillis()-t2) + ", " + (System.currentTimeMillis()-t2)/1000); 
 	    model.addAttribute(ShredNewsServiceImpl.BATTLE_SHREDS, shredNewsItems.get(ShredNewsServiceImpl.BATTLE_SHREDS));
 		model.addAttribute(ShredNewsServiceImpl.FANEES_NEWS, shredNewsItems.get(ShredNewsServiceImpl.FANEES_NEWS));
 		model.addAttribute(ShredNewsServiceImpl.NEWEST_BATTLES, shredNewsItems.get(ShredNewsServiceImpl.NEWEST_BATTLES));
@@ -242,20 +245,20 @@ public class HomeController {
 	@RequestMapping(value = {"/shredpool"}, method = RequestMethod.GET)
 	public String theShredPool(Model model, HttpSession session) {
 		Shredder shredder = (Shredder) session.getAttribute("shredder");
-		logger.info("Inside the shredpool. Shredder: " + shredder.getUsername() + ", id=" + shredder.getId());		
+	//	logger.info("Inside the shredpool. Shredder: " + shredder.getUsername() + ", id=" + shredder.getId());		
 		
-		long t1 = System.currentTimeMillis();
+		//long t1 = System.currentTimeMillis();
 		ShredListCache fanShredCache = new ShredListCache(dbFinder.getFanShreds(shredder.getId()), 4, 20);
-		logger.info("get fan shreds: Time: " + (System.currentTimeMillis()-t1) + ", " + (System.currentTimeMillis()-t1)/1000 );
+		//logger.info("get fan shreds: Time: " + (System.currentTimeMillis()-t1) + ", " + (System.currentTimeMillis()-t1)/1000 );
 		session.setAttribute("fanShredCache", fanShredCache);		
-		long t2 = System.currentTimeMillis();
+		//long t2 = System.currentTimeMillis();
 		ShredListCache topShredsCache = new ShredListCache(shredService.getTopShredsByRating(0), 2, 20);
-		logger.info("get top shreds: " + (System.currentTimeMillis()-t2) + ", " + (System.currentTimeMillis()-t2)/1000 );
+		//logger.info("get top shreds: " + (System.currentTimeMillis()-t2) + ", " + (System.currentTimeMillis()-t2)/1000 );
 
 		session.setAttribute("topShredCache", topShredsCache);		
-		long t3 = System.currentTimeMillis();
+		//long t3 = System.currentTimeMillis();
 		ShredListCache mightKnowShredsCache = new ShredListCache(dbFinder.getMightKnowShreds(shredder.getId()), 3, 21);
-		logger.info("get might know shreds: Time: " + (System.currentTimeMillis()-t3) + ", " + (System.currentTimeMillis()-t3)/1000 );
+		//logger.info("get might know shreds: Time: " + (System.currentTimeMillis()-t3) + ", " + (System.currentTimeMillis()-t3)/1000 );
 
 		session.setAttribute("mightKnowShredsCache", mightKnowShredsCache);	
 		
@@ -263,13 +266,13 @@ public class HomeController {
 		topShredsCache.getNextSet();
 		mightKnowShredsCache.getNextSet();
 		
-		long t4 = System.currentTimeMillis();
+		//long t4 = System.currentTimeMillis();
 		session.setAttribute("tagShreds", dbFinder.getAllShreds());
-		logger.info("get tag Time: " + (System.currentTimeMillis()-t4) + ", " + (System.currentTimeMillis()-t4)/1000 );
+		//logger.info("get tag Time: " + (System.currentTimeMillis()-t4) + ", " + (System.currentTimeMillis()-t4)/1000 );
 		
-		long t5 = System.currentTimeMillis();
+		//long t5 = System.currentTimeMillis();
 		this.populateStatefullShredPoolModel(model, shredder, session);
-		logger.info("get fan shreds: Time: " + (System.currentTimeMillis()-t5) + ", " + (System.currentTimeMillis()-t5)/1000 );
+		//logger.info("get fan shreds: Time: " + (System.currentTimeMillis()-t5) + ", " + (System.currentTimeMillis()-t5)/1000 );
 
 		model.addAttribute("currShred", null);
 		model.addAttribute("showView", false);
@@ -298,12 +301,12 @@ public class HomeController {
 	 */
 	@RequestMapping(value={"/login", "/",""}, method = RequestMethod.GET)
 	public String loginPage(ModelMap model) {
-		logger.info("/ requested!");
+		//logger.info("/ requested!");
 		model.addAttribute(new Shredder());
 		/* Uncomment if slow */
-		long t1 = System.currentTimeMillis();
+		//long t1 = System.currentTimeMillis();
 		List <Shred> shreds = shredService.getTopShredsByRating(0); 
-		logger.info("/ time: " + (System.currentTimeMillis() - t1) + ", " + (System.currentTimeMillis() - t1) / 1000);
+		//logger.info("/ time: " + (System.currentTimeMillis() - t1) + ", " + (System.currentTimeMillis() - t1) / 1000);
 		model.addAttribute("topShreds", shreds );
 		model.addAttribute("showView", false);
 		/* Uncomment if slow */
@@ -312,13 +315,13 @@ public class HomeController {
 	
 	@RequestMapping(value="/showShred/{shredId}", method = RequestMethod.GET)
 	public String showShred(@PathVariable String shredId, ModelMap model) {
-		logger.info("showShred requested!");
+		//logger.info("showShred requested!");
 		model.addAttribute(new Shredder());
 		/* Uncomment if slow */
-		long t1 = System.currentTimeMillis();
+		//long t1 = System.currentTimeMillis();
 		List <Shred> shreds = shredService.getTopShredsByRating(0);
 		Shred s = shredService.getShredById(shredId);
-		logger.info("/ time: " + (System.currentTimeMillis() - t1) + ", " + (System.currentTimeMillis() - t1) / 1000);
+		//logger.info("/ time: " + (System.currentTimeMillis() - t1) + ", " + (System.currentTimeMillis() - t1) / 1000);
 		model.addAttribute("topShreds", shreds );
 		model.addAttribute("currShred", s);
 		model.addAttribute("showView", true);
@@ -328,13 +331,13 @@ public class HomeController {
 	
 	@RequestMapping(value="/shredpool/showShred/{shredId}", method = RequestMethod.GET)
 	public String showShredInShredPool(@PathVariable String shredId, Model model, HttpSession session) {
-		logger.info("showShred requested!");
+		//logger.info("showShred requested!");
 		model.addAttribute(new Shredder());
 		/* Uncomment if slow */
-		long t1 = System.currentTimeMillis();
+		//long t1 = System.currentTimeMillis();
 		
 		Shred s = shredService.getShredById(shredId);
-		logger.info("/ time: " + (System.currentTimeMillis() - t1) + ", " + (System.currentTimeMillis() - t1) / 1000);
+		//logger.info("/ time: " + (System.currentTimeMillis() - t1) + ", " + (System.currentTimeMillis() - t1) / 1000);
 		model.addAttribute("currShred", s);
 		model.addAttribute("showView", true);
 		/* Uncomment if slow */
@@ -345,7 +348,7 @@ public class HomeController {
  
 	@RequestMapping(value="/loginfailed", method = RequestMethod.GET)
 	public String loginerror(ModelMap model) { 
-		logger.info("Login failed");
+		//logger.info("Login failed");
 		model.addAttribute("error", "Wrong username or password entered!");
 		return "errorPage";
  
@@ -353,7 +356,7 @@ public class HomeController {
  
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logout(ModelMap model, HttpSession session) {
-		logger.info("Logout entered");
+		//logger.info("Logout entered");
 		session.invalidate(); 
 		model.addAttribute(new Shredder());
 		return "home"; 
@@ -365,17 +368,18 @@ public class HomeController {
 		@RequestMapping(value ="/theShredPool", method = RequestMethod.GET)
 		public String getRecommendedShredsByTagList(@RequestParam("tagList") String tagList, Model model, HttpSession session) {
 			Shredder shredder = (Shredder) session.getAttribute("shredder");
-			logger.info("getRecommendedShredsByTagList() requested! tags: " + tagList);
+			//logger.info("getRecommendedShredsByTagList() requested! tags: " + tagList);
 			List <String> tags = getTagsFromString(tagList);
 			if ( tags != null && tagList.isEmpty()){
-				logger.info("no tags, return all");
+			//	logger.info("no tags, return all");
 				session.setAttribute("tagShreds", dbFinder.getAllShreds()); 
 			}else if ( tags != null ) {
-				logger.info("got tags");
+				//logger.info("got tags");
 				session.setAttribute("tagShreds", recommendationService.getRecsBasedOnTags(tags));	
-			} else {
-				logger.info("Error! Wrong format for tags");
 			}
+			//else {
+				//logger.info("Error! Wrong format for tags");
+			//}
 			
 			this.populateStatefullShredPoolModel(model, shredder, session);
 			return "theShredPool";

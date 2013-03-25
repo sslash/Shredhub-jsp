@@ -44,12 +44,12 @@ public class ShredderController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String getShredder(@PathVariable int id, HttpSession session,
 			Model model) throws Exception {
-		logger.info("getShredder() requested!" + id);
+		//logger.info("getShredder() requested!" + id);
 
 		Shredder loggedInUser = (Shredder) session.getAttribute("shredder");
 		Shredder toReturn = null;
 		if ( id == loggedInUser.getId() ) {
-			logger.info("Get logged in shredder!");
+		//	logger.info("Get logged in shredder!");
 			toReturn = loggedInUser;
 		} else {
 			toReturn = shredderService.getShredderWithId(id);
@@ -62,8 +62,8 @@ public class ShredderController {
 		boolean isFan = shredderService.getIfShredder1IsFanOfShredder2(
 				loggedInUser.getId(), toReturn.getId());
 
-		logger.info("Returning: " + toReturn.getId() + ": "
-				+ toReturn.getUsername() + "Fan? " + isFan);
+		//logger.info("Returning: " + toReturn.getId() + ": "
+			//	+ toReturn.getUsername() + "Fan? " + isFan);
 		battleStatusService.setBattleStatus(loggedInUser, toReturn, model);
 		model.addAttribute("shreds", shreds);
 		model.addAttribute("isFan", isFan);
@@ -79,20 +79,20 @@ public class ShredderController {
 			HttpSession session,
 			@RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
 			Model model) {
-		logger.info("Inside create shredder");
+		//logger.info("Inside create shredder");
 		if (result.hasErrors()) {
-			logger.info("error: " + result.getFieldError() + " ");
+			//logger.info("error: " + result.getFieldError() + " ");
 			model.addAttribute("errorMsg", "Error: " + result.getFieldError().getDefaultMessage() );
 			return "/errorPage";
 		}
 
 		try {
 			shredderService.addShredder(shredder, profileImage);
-			logger.info("added new shredder: " + shredder.getId() + " "
-					+ shredder.getUsername() + " " + shredder.getProfileImagePath());
+			//logger.info("added new shredder: " + shredder.getId() + " "
+				//	+ shredder.getUsername() + " " + shredder.getProfileImagePath());
 		} catch (ImageUploadException e) {
 			result.reject("Error creating user: " + e.getMessage());
-			System.out.println("Failed to save the shredder: " + e.getMessage());
+			//System.out.println("Failed to save the shredder: " + e.getMessage());
 			model.addAttribute("errorMsg", "Failed to upload the profile image " );
 			return "/errorPage";
 		}
@@ -103,13 +103,13 @@ public class ShredderController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getShredders(Model model, HttpSession session) {
-		logger.info("Inside getShredders: ");
+		//logger.info("Inside getShredders: ");
 		return this.getShreddersAndReturnShreddersView(model, session);
 	}
 	
 	@RequestMapping(value="/nextPage", method = RequestMethod.GET)
 	public String getNextPageOfShredders(Model model, HttpSession session) {
-		logger.info("Inside getNextPageOfShredders: ");
+		//logger.info("Inside getNextPageOfShredders: ");
 		Object pageNo = session.getAttribute("shredderPageNo");
 		if ( pageNo != null)
 			session.setAttribute( "shredderPageNo", ((Integer)pageNo) +1 );
@@ -137,7 +137,6 @@ public class ShredderController {
 		try {
 			
 			List <Shredder> updatedFaneesList = shredderService.createFaneeRelation(shredder.getId(), faneeId, shreddersFanees);
-			
 			session.setAttribute("fans",updatedFaneesList);
 			return this.getShreddersAndReturnShreddersView(model, session);
 			
