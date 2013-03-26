@@ -27,7 +27,7 @@
 		<property name="url" value="jdbc:postgresql:shredhub" />
 		<property name="initialSize" value="50" />
 		<property name="username" value="postgres" />
-		<property name="password" value="1234" />
+		<property name="password" value="init1234" />
 	</bean>
 	
 	<!-- JDBC Template -->
