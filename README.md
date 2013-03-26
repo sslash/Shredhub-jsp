@@ -89,6 +89,31 @@ jan | feb | march | april | ... | dec
 
 
 
+LOADING SCRIPTS:
+In order to avoid blocking shiet:
+Don’t docwrite scripts
+April 10, 2012 5:29 pm | 32 Comments
 
+In yesterday’s blog post, Making the HTTP Archive faster, one of the biggest speedups came from not using a script loader. It turns out that script loader was using document.write to load scripts dynamically. I wrote about the document.write technique in Loading Script Without Blocking back in April 2009, as well as in Even Faster Web Sites (chapter 4). It looks something like this:
+
+document.write('<script src="' + src + '" type="text/javascript"><\/script>'):
+The problem with document.write for script loading is:
+
+Every DOM element below the inserted script is blocked from rendering until the script is done downloading (example).
+It blocks other dynamic scripts (example). One exception is if multiple scripts are inserted using document.write within the same SCRIPT block (example).
+Because the script loader was using document.write, the page I was optimizing rendered late and other async scripts in the page took longer to download. I removed the script loader and instead wrote my own code to load the script asynchronously following the createElement-insertBefore pattern popularized by the Google Analytics async snippet:
+
+var sNew = document.createElement("script");
+sNew.async = true;
+sNew.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js";
+var s0 = document.getElementsByTagName('script')[0];
+s0.parentNode.insertBefore(sNew, s0);
+Why does using document.write to dynamically insert scripts produce these bad performance effects?
+
+It’s really not surprising if we walk through it step-by-step: We know that loading scripts using normal SCRIPT SRC= markup blocks rendering for all subsequent DOM elements. And we know that document.write is evaluated immediately before script execution releases control and the page resumes being parsed. Therefore, the document.write technique inserts a script using normal SCRIPT SRC= which blocks the rest of the page from rendering.
+
+On the other hand, scripts inserted using the createElement-insertBefore technique do not block rendering. In fact, if document.write generated a createElement-insertBefore snippet then rendering would also not be blocked.
+
+At the bottom of my Loading Script Without Blocking blog post is a decision tree to help developers choose which async technique to use under different scenarios. If you look closely you’ll notice that document.write is never recommended. A lot of things change on the Web, but that advice was true in 2009 and is still true today.
   
  
