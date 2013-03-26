@@ -86,7 +86,7 @@ public class HomeController {
 		logger.info("Login success! Welcome" + username);
 	 
 		this.populateSessionObject(shredder, session);		
-		return "redirect:/shredpool"; 
+		return "redirect:/shredpool";
 	}
 	
 //	@RequestMapping(value="/loginShredder", method = RequestMethod.POST)
