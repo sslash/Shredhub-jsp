@@ -122,7 +122,7 @@ public class HomeController {
 	}
 	
 	// TODO: Ugly url
-	@RequestMapping(value = {"/loginShredder"},params = "action=nextShredSet", method = RequestMethod.GET)
+	@RequestMapping(value = {"/shredpool"},params = "action=nextShredSet", method = RequestMethod.GET)
 	public String nextShred( Model model, HttpSession session) {
 		Shredder shredder = (Shredder) session.getAttribute("shredder");
 		//logger.info("nextShred() requested! Shredder: " + shredder.getUsername() + ", id=" + shredder.getId());
@@ -135,10 +135,10 @@ public class HomeController {
 			//logger.info("Number of new shreds: " + fanShreds.size());
 			fanShredCache.resetShredSet(fanShreds);
 		}
-		//else {
-			//logger.info("No.. ");
-		//}
-		
+//		else {
+//			logger.info("No.. ");
+//		}
+//		
 		fanShredCache.getNextSet();
 		this.populateStatefullShredPoolModel(model, shredder, session);
 		
