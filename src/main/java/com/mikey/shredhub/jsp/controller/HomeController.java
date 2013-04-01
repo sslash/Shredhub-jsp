@@ -51,7 +51,7 @@ import com.mikey.shredhub.controller.jsp.helpers.ShredListCache;
  * @param session
  * @return
  */@Controller
- @Scope("session")
+ //@Scope("session")
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);	
 	
