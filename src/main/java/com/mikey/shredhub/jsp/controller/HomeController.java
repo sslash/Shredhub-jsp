@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
+//import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -247,34 +247,23 @@ public class HomeController {
 	@RequestMapping(value = {"/shredpool"}, method = RequestMethod.GET)
 	public String theShredPool(Model model, HttpSession session) {
 		Shredder shredder = (Shredder) session.getAttribute("shredder");
-		logger.info("Inside the shredpool. Shredder: " + shredder.getUsername() + ", id=" + shredder.getId());		
+		//logger.info("Inside the shredpool. Shredder: " + shredder.getUsername() + ", id=" + shredder.getId());		
 		
-		long t1 = System.currentTimeMillis();
 		ShredListCache fanShredCache = new ShredListCache(dbFinder.getFanShreds(shredder.getId()), 4, 20);
-		logger.info("get fan shreds: Time: " + (System.currentTimeMillis()-t1) + ", " + (System.currentTimeMillis()-t1)/1000 );
+		//logger.info("get fan shreds: Time: " + (System.currentTimeMillis()-t1) + ", " + (System.currentTimeMillis()-t1)/1000 );
 		session.setAttribute("fanShredCache", fanShredCache);		
-		long t2 = System.currentTimeMillis();
 		ShredListCache topShredsCache = new ShredListCache(shredService.getTopShredsByRating(0), 2, 20);
-		logger.info("get top shreds: " + (System.currentTimeMillis()-t2) + ", " + (System.currentTimeMillis()-t2)/1000 );
 
 		session.setAttribute("topShredCache", topShredsCache);		
-		long t3 = System.currentTimeMillis();
 		ShredListCache mightKnowShredsCache = new ShredListCache(dbFinder.getMightKnowShreds(shredder.getId()), 3, 21);
-		logger.info("get might know shreds: Time: " + (System.currentTimeMillis()-t3) + ", " + (System.currentTimeMillis()-t3)/1000 );
-
 		session.setAttribute("mightKnowShredsCache", mightKnowShredsCache);	
 		
 		fanShredCache.getNextSet();	
 		topShredsCache.getNextSet();
 		mightKnowShredsCache.getNextSet();
 		
-		long t4 = System.currentTimeMillis();
 		session.setAttribute("tagShreds", dbFinder.getAllShreds());
-		logger.info("get tag Time: " + (System.currentTimeMillis()-t4) + ", " + (System.currentTimeMillis()-t4)/1000 );
-		
-		long t5 = System.currentTimeMillis();
 		this.populateStatefullShredPoolModel(model, shredder, session);
-		logger.info("get fan shreds: Time: " + (System.currentTimeMillis()-t5) + ", " + (System.currentTimeMillis()-t5)/1000 );
 
 		model.addAttribute("currShred", null);
 		model.addAttribute("showView", false);
