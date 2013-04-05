@@ -66,6 +66,12 @@
 												<td> ${c.text} </td>
 												<td> ${c.commenter.username} </td>
 												<td> ${c.timeCreated} </td>
+												<td>
+												<form action="<c:url value="/shred/"/>${currShred.id}/deleteComment/${c.id}" method="POST">
+												<input type="submit" class="btn btn-small btn-info" value="X">
+												</form>
+												</td>
+												
 											</tr>
 										</c:forEach>
 									</tbody>

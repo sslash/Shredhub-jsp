@@ -90,6 +90,16 @@ public class ShredController {
 		}
 	}
 	
+	//deleteComment/${c.id}
+	@RequestMapping(value = "/{shredid}/deleteComment/{commentId}", method = RequestMethod.POST)
+	public String deleteShred(@PathVariable int shredid,@PathVariable int commentId, HttpSession session,
+			Model model) throws Exception {
+		// TODO: add biz rules
+		shredService.deleteCommentForShred(commentId);
+		return "theShredPool";
+	}
+	
+	
 	// Ajax supported function to fetch a Shred
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody
